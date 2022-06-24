@@ -14,18 +14,18 @@ namespace FantomLib
         private readonly OnChangeCallback onChangeCallback;
         private readonly OnCancelCallback onCancelCallback;
 
-        private readonly FantomCallbackHelper callbackHelper;
+        // private readonly FantomCallbackHelper callbackHelper;
         public AndroidSingleChoiceDialogCallback(OnResultCallback onResultCallback, OnChangeCallback onChangeCallback = null, OnCancelCallback onCancelCallback = null) : base(AndroidPlugin.ANDROID_PACKAGE + ".AndroidSingleChoiceDialogCallback")
         {
             this.onResultCallback = onResultCallback;
             this.onChangeCallback = onChangeCallback;
             this.onCancelCallback = onCancelCallback;
-            this.callbackHelper = new GameObject("FantomCallbackHelper").AddComponent<FantomCallbackHelper>();
+            // this.callbackHelper = new GameObject("FantomCallbackHelper").AddComponent<FantomCallbackHelper>();
         }
 
         public void onResult(string res)
         {
-            callbackHelper.CallOnMainThread(() =>
+            FantomCallbackHelper.Instance.CallOnMainThread(() =>
             {
                 CallResultCallback(res);
             });
@@ -33,14 +33,14 @@ namespace FantomLib
 
         public void onCancel()
         {
-            callbackHelper.CallOnMainThread(() =>
+            FantomCallbackHelper.Instance.CallOnMainThread(() =>
             {
                 CallCancelCallback();
             });
         }
         public void onChange(string res)
         {
-            callbackHelper.CallOnMainThread(() =>
+            FantomCallbackHelper.Instance.CallOnMainThread(() =>
             {
                 CallChangeCallback(res);
             });
@@ -50,15 +50,14 @@ namespace FantomLib
         private void CallChangeCallback(string res)
         {
             Debug.Log("CallChangeCallback" + res);
-            // try
-            // {
+            try
+            {
                 if (onChangeCallback != null)
                     onChangeCallback(res);
-            // }
-            // finally
-            // {
-            //     Object.Destroy(callbackHelper.gameObject);
-            // }
+            }
+            finally
+            {
+            }
         }
 
         private void CallCancelCallback()
@@ -70,7 +69,7 @@ namespace FantomLib
             }
             finally
             {
-                Object.Destroy(callbackHelper.gameObject);
+
             }
         }
 
@@ -83,7 +82,7 @@ namespace FantomLib
             }
             finally
             {
-                Object.Destroy(callbackHelper.gameObject);
+
             }
         }
     }

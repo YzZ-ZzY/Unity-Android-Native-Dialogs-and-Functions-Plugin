@@ -9,15 +9,15 @@ namespace FantomLib
         public delegate void ResultCallback(string dateTime);
 
 		private readonly ResultCallback resultCallback;
-		private readonly FantomCallbackHelper callbackHelper;
+		// private readonly FantomCallbackHelper callbackHelper;
         public AndroidNumericTextDialogCallback(ResultCallback resultCallback) : base(AndroidPlugin.ANDROID_PACKAGE + ".AndroidNumericTextDialogCallback") { 
             this.resultCallback = resultCallback;
-            this.callbackHelper = new GameObject( "FantomCallbackHelper" ).AddComponent<FantomCallbackHelper>();
+            // this.callbackHelper = new GameObject( "FantomCallbackHelper" ).AddComponent<FantomCallbackHelper>();
         }
         
         public void onResult(string dateTime)
         {
-			callbackHelper.CallOnMainThread( () => {
+			FantomCallbackHelper.Instance.CallOnMainThread( () => {
               CallResultCallback(dateTime);
             });
 
@@ -31,7 +31,6 @@ namespace FantomLib
 			}
 			finally
 			{
-				Object.Destroy( callbackHelper.gameObject );
 			}
 		}
 

@@ -9,16 +9,16 @@ namespace FantomLib
         public delegate void OnResultCallback(string result);
 
         private readonly OnResultCallback onResultCallback;
-        private readonly FantomCallbackHelper callbackHelper;
+        // private readonly FantomCallbackHelper callbackHelper;
         public AndroidPermissionCallback(OnResultCallback onResultCallback) : base(AndroidPlugin.ANDROID_PACKAGE + ".AndroidPermissionCallback")
         {
             this.onResultCallback = onResultCallback;
-            this.callbackHelper = new GameObject("FantomCallbackHelper").AddComponent<FantomCallbackHelper>();
+            // this.callbackHelper = new GameObject("FantomCallbackHelper").AddComponent<FantomCallbackHelper>();
         }
 
         public void onResult(string res)
         {
-            callbackHelper.CallOnMainThread(() =>
+            FantomCallbackHelper.Instance.CallOnMainThread(() =>
             {
                 CallResultCallback(res);
             });
@@ -33,7 +33,6 @@ namespace FantomLib
             }
             finally
             {
-                Object.Destroy(callbackHelper.gameObject);
             }
         }
 
