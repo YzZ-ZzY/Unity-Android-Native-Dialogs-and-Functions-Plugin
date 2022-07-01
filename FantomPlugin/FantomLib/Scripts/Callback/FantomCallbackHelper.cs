@@ -24,11 +24,7 @@ namespace FantomLib
         }
 
 		private System.Action mainThreadAction = null;
-		private void Awake()
-		{
 
-			DontDestroyOnLoad( gameObject );
-		}
 
 		private void Update()
 		{
